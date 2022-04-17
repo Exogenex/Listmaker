@@ -8,16 +8,18 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.exogenex.listmaker.MainActivity
 import com.exogenex.listmaker.R
 import com.exogenex.listmaker.databinding.ListDetailActivityBinding
 import com.exogenex.listmaker.ui.detail.ui.detail.ListDetailFragment
-import com.exogenex.listmaker.ui.detail.ui.detail.ListDetailViewModel
+import com.exogenex.listmaker.ui.main.MainViewModel
+import com.exogenex.listmaker.ui.main.MainViewModelFactory
 
 class ListDetailActivity : AppCompatActivity() {
 
     lateinit var binding: ListDetailActivityBinding
-    lateinit var viewModel: ListDetailViewModel
+    lateinit var viewModel: MainViewModel
     lateinit var fragment: ListDetailFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,8 @@ class ListDetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        viewModel = ViewModelProvider(this).get(ListDetailViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(PreferenceManager.getDefaultSharedPreferences(this)))
+            .get(MainViewModel::class.java)
         viewModel.list = intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)!!
 
         binding.addTaskButton.setOnClickListener { showCreateTaskDialog() }

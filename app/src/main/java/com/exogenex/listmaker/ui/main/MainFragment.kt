@@ -1,24 +1,25 @@
 package com.exogenex.listmaker.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.exogenex.listmaker.databinding.MainFragmentBinding
 import com.exogenex.listmaker.models.TaskList
 
-class MainFragment(val clickListener: MainFragmentInteractionListener)
-    : Fragment(), ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
+class MainFragment : Fragment(), ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
+
+    lateinit var clickListener: MainFragmentInteractionListener
 
     interface MainFragmentInteractionListener { fun listItemTapped(list: TaskList) }
 
     private lateinit var binding: MainFragmentBinding
 
-    companion object { fun newInstance(clickListener: MainFragmentInteractionListener) = MainFragment(clickListener) }
+    companion object { fun newInstance() = MainFragment() }
 
     private lateinit var viewModel: MainViewModel
 
